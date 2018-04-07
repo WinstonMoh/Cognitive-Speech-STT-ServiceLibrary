@@ -16,6 +16,9 @@ namespace SpeechClientSample
     using System.Threading.Tasks;
     using CognitiveServicesAuthorization;
     using Microsoft.Bing.Speech;
+    // Import Wave of NAudio to use the MediaFoundationReader
+    using NAudio.Wave;
+    using NLayer.NAudioSupport;
 
     /// <summary>
     /// This sample program shows how to use <see cref="SpeechClient"/> APIs to perform speech recognition.
@@ -71,6 +74,9 @@ namespace SpeechClientSample
                 return;
             }
 
+            // Convert file from mp4 to wav
+            Button1_Click();
+
             // Send a speech recognition request for the audio.
             var p = new Program();
             p.Run(args[0], args[1], char.ToLower(args[2][0]) == 'l' ? LongDictationUrl : ShortPhraseUrl, args[3]).Wait();
@@ -85,12 +91,12 @@ namespace SpeechClientSample
         /// </returns>
         public Task OnPartialResult(RecognitionPartialResult args)
         {
-            // Console.WriteLine("--- Partial result received by OnPartialResult ---");
+             //Console.WriteLine("--- Partial result received by OnPartialResult ---");
 
-            // Print the partial response recognition hypothesis.
-            // Console.WriteLine(args.DisplayText);
+             // Print the partial response recognition hypothesis.
+             //Console.WriteLine(args.DisplayText);
 
-            // Console.WriteLine();
+             //Console.WriteLine();
 
             return CompletedTask;
         }
@@ -107,7 +113,7 @@ namespace SpeechClientSample
             var response = args;
             Console.WriteLine();
 
-            Console.WriteLine("--- Phrase result received by OnRecognitionResult ---");
+            //Console.WriteLine("--- Phrase result received by OnRecognitionResult ---");
 
             // Print the recognition status.
             Console.WriteLine("***** Phrase Recognition Status = [{0}] ***", response.RecognitionStatus);
@@ -120,7 +126,7 @@ namespace SpeechClientSample
                 foreach (var result in response.Phrases)
                 {
                     // Print the recognition phrase display text.
-                    // Console.WriteLine("{0} (Confidence:{1})", result.DisplayText, result.Confidence);
+                    //Console.WriteLine("{0} (Confidence:{1})", result.DisplayText, result.Confidence);
                     phrases.Add(result.DisplayText);    // place text in arrayList.
                 }
 
@@ -129,7 +135,11 @@ namespace SpeechClientSample
                 Console.WriteLine(text);   // Print out only last phrase.
 
                 // Output text to a .txt file.
-                File.WriteAllText(Path, text);
+                //File.WriteAllText(Path, text);
+                using (StreamWriter file = new StreamWriter(Path, true))
+                {
+                    file.WriteLine(text);
+                }
             }
 
             Console.WriteLine();
@@ -188,6 +198,23 @@ namespace SpeechClientSample
             Console.WriteLine("Arg[3]: Specify the subscription key to access the Speech Recognition Service.");
             Console.WriteLine();
             Console.WriteLine("Sign up at https://www.microsoft.com/cognitive-services/ with a client/subscription id to get a client secret key.");
+        }
+
+
+        // NAudio Function.
+        public static void Button1_Click()
+        {
+            // Store the path of the file that you want to convert into a wav
+            // as well its new path and name with extension
+            string InputAudioFilePath = @"C:\Users\Dell XPS\Music\iTunes\iTunes Media\Music\Drake & Future\What a Time To Be Alive\10 Jersey.mp3";
+            string OutputAudioFilePath = @"C:\Users\Dell XPS\Music\iTunes\iTunes Media\Music\Drake & Future\What a Time To Be Alive\song_converted.wav";
+
+            // Use the MediaFoundationReader class to obtain the content of the audio and use the wavfilewriter
+            // to create the new file in wav format in the providen path with the content of the file
+            using (Mp3FileReader reader = new Mp3FileReader(InputAudioFilePath, wf => new Mp3FrameDecompressor(wf)))
+            {
+                WaveFileWriter.CreateWaveFile(OutputAudioFilePath, reader);
+            }
         }
     }
 }
