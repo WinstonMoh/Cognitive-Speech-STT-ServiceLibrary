@@ -39,9 +39,9 @@ Open the output directory for the sample, for example, SpeechClientSample\bin\De
 
 Run `SpeechClientSample.exe` with the following arguments:
 
-  Arg[0]: Specify an input audio WAV file.
+  Arg[0]: Specify an input audio WAV file. Place .wav file in same folder as .exe file
 
-  Arg[1]: Specify the audio locale.
+  Arg[1]: Specify the audio locale. example: "en-us"
 
   Arg[2]: Specify the recognition modes: Short for the `ShortPhrase` mode and Long for the `LongDictation` mode.
 
