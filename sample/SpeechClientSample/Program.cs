@@ -10,6 +10,7 @@
 namespace SpeechClientSample
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace SpeechClientSample
     /// </summary>
     public class Program
     {
+        private const string Path = @"C:\Users\Dell XPS\Documents\GitHub\Closed Captioning Creator\Results\SpeechText.txt";
+
         /// <summary>
         /// Short phrase mode URL
         /// </summary>
@@ -82,12 +85,12 @@ namespace SpeechClientSample
         /// </returns>
         public Task OnPartialResult(RecognitionPartialResult args)
         {
-            Console.WriteLine("--- Partial result received by OnPartialResult ---");
+            // Console.WriteLine("--- Partial result received by OnPartialResult ---");
 
             // Print the partial response recognition hypothesis.
-            Console.WriteLine(args.DisplayText);
+            // Console.WriteLine(args.DisplayText);
 
-            Console.WriteLine();
+            // Console.WriteLine();
 
             return CompletedTask;
         }
@@ -108,13 +111,25 @@ namespace SpeechClientSample
 
             // Print the recognition status.
             Console.WriteLine("***** Phrase Recognition Status = [{0}] ***", response.RecognitionStatus);
+
+            // create arrayList to save Texts.
+            List<string> phrases = new List<string>();
+
             if (response.Phrases != null)
             {
                 foreach (var result in response.Phrases)
                 {
                     // Print the recognition phrase display text.
-                    Console.WriteLine("{0} (Confidence:{1})", result.DisplayText, result.Confidence);
+                    // Console.WriteLine("{0} (Confidence:{1})", result.DisplayText, result.Confidence);
+                    phrases.Add(result.DisplayText);    // place text in arrayList.
                 }
+
+                // Extract only final result.
+                string text = phrases[phrases.Count - 1];
+                Console.WriteLine(text);   // Print out only last phrase.
+
+                // Output text to a .txt file.
+                File.WriteAllText(Path, text);
             }
 
             Console.WriteLine();
