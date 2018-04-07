@@ -39,7 +39,7 @@ Open the output directory for the sample, for example, SpeechClientSample\bin\De
 
 Run `SpeechClientSample.exe` with the following arguments:
 
-  Arg[0]: Specify an input audio WAV file. Place .wav file in same folder as .exe file
+  Arg[0]: Specify an input audio WAV file. Place .wav file in same folder as .exe file.
 
   Arg[1]: Specify the audio locale. example: "en-us"
 
