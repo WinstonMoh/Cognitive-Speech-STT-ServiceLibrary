@@ -11,6 +11,7 @@ CC Creator is a program which converts videos with no subtitles to one with subt
 
 ## Table of Contents
 [Prerequisites](#prerequisites)<br/>
+[Get API Key](#get_api_key)<br/>
 [Install the sample application](#install_the_sample_application)<br/>
 [Build the sample application](#build_the_sample_application)<br/>
 [Run the sample application](#run_the_sample_application)<br/>
@@ -19,7 +20,8 @@ CC Creator is a program which converts videos with no subtitles to one with subt
 Platform requirements
 The following example was developed for Windows 10 and .NET 4.5+ Framework by using Visual Studio 2017, Community Edition.
 
-# Subscribe to the Speech Recognition API, and get a free trial subscription key
+## <a name="get_api_key"></a>Get API Key
+Subscribe to the Speech Recognition API, and get a free trial subscription key.
 The Speech API is part of Cognitive Services (previously Project Oxford). You can get free trial subscription keys from the Cognitive Services subscription page. After you select the Speech API, select Get API Key to get the key. It returns a primary and secondary key. Both keys are tied to the same quota, so you can use either key.
 
 ## <a name="install_the_sample_application"></a>Install the sample application
